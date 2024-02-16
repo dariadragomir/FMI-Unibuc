@@ -1,0 +1,33 @@
+def functie(n, *siruri):
+    rezultat=[]
+    for sir in siruri:
+        if len(sir)==n:
+            rezultat.append(sir)
+    return rezultat
+
+n=5
+rez=functie(n, "carte", "acasa", "tren", "camin", "student")
+if rez== []:
+    print("Nu exista sir de lungime", n)
+else:
+    print("Sirurile de lungime {n} sunt: \n")
+    print(*rez, sep="\n")
+
+"""Generator
+
+def generator(n, *siruri):
+    for sir in siruri:
+        if len(sir)==n:
+            yield sir
+n=5
+rez=generator(n, "carte", "acasa", "tren", "camin", "student")
+
+lista = next(rez, None)
+if lista is None:
+    print("Nu exista sir de lungime", n)
+else:
+    print("Sirurile de lungime {n} sunt: \n")
+    while lista is not None:
+        print(lista)
+        lista = next(rez, None)
+"""
