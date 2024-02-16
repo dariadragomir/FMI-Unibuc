@@ -1,0 +1,11 @@
+def matrice(n):
+    M=[[0]*n]*n
+    for i in range (0, n):
+        M[i][n-1]=1
+        M[n-1][i]=1
+    for i in range (n-2, -1, -1):
+        for j in range(n-2, -1, -1):
+            M[i][j]=M[i+1][j]+M[i][j+1]
+    return M
+L=matrice(4)
+print(L)

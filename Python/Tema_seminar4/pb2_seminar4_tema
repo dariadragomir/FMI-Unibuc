@@ -1,0 +1,56 @@
+def valid1(x):
+    if x>0:
+        return True
+    return False
+
+def valid2(x):
+    if x in ",.?:;'!-":
+        return True
+    return False
+
+def valid3(x):
+    s="lac"
+    lg=len(s)
+    ap_mari=[0]*65
+    ap_mici=[0]*65
+    for i in s:
+        if 'A'<=i & i<='Z':
+            ap_mari[i-'A']+=1
+        elif 'a'<=i & i<='z':
+            ap_mici[i-'a']+=1
+    for i in x:
+        if 'A'<=i & i<='Z':
+            ap_mari[i-'A']-=1
+        elif 'a'<=i & i<='z':
+            ap_mici[i-'a']-=1
+    for i in range(65):
+        if ap_mici[i]!=0 | ap_mari[i]!=0:
+            return False
+        return True
+    
+def valid4(x):
+    nrcif=0
+    sumcif=0
+    s=23
+    while(x):
+        nrcif+=1
+        sumcif+=x%10
+        x/=10
+    if sumcif==s:
+        return True
+    return False
+
+def functie(lista):
+    L=[]
+    for i in len(lista):
+        if valid1(lista[i]):
+            L.append(lista[i])
+    return lista
+"""
+t=(1, -2, 5, -23, 4, 8)
+functie(t)
+sir="Ana are: mere, pere, mandarine!"
+functie(sir)
+sir2="cuvinte, cal, lac"
+functie(sir2)
+"""
