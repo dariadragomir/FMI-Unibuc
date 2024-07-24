@@ -1,3 +1,4 @@
+//subiect 30 mai 2023
 #include <iostream>
 #include <vector>
 #include <memory>
