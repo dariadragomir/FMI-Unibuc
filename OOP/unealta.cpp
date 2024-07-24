@@ -1,3 +1,4 @@
+//16 ian 2023 CTI seria 26
 #include <iostream>
 #include <memory>
 #include <vector>
