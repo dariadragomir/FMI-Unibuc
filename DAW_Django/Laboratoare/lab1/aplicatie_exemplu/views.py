@@ -112,6 +112,8 @@ def lista(request):
 #request.GET.get('cuvinte') returneaza o singura valoare
 
 elevi = []
+elevi_clasa_minima = []
+elevi_clasa_maxima = []
 def elev(request):
     nume = request.GET.get('nume', '')
     prenume = request.GET.get('prenume', '')
@@ -121,10 +123,18 @@ def elev(request):
     clasa_min = 13
     clasa_max = -1
     for elev in elevi:
-        clasa_min = min(elev['clasa'], clasa_min)
-        clasa_max = max(elev['clasa'], clasa_max)
-    elevi_clasa_minima = [elev for elev in elevi if elev['clasa'] == clasa_min]
-    elevi_clasa_maxima = [elev for elev in elevi if elev['clasa'] == clasa_max]
+        if elev['clasa'] < clasa_min:
+            clasa_min = elev['clasa']
+            elevi_clasa_minima = [elev]
+        if elev['clasa'] > clasa_max:
+            clasa_max=elev['clasa']
+            elevi_clasa_maxima=[elev]
+            
+    for elev in elevi:
+        if elev['clasa']==clasa_min and elev not in elevi_clasa_minima:
+            elevi_clasa_minima.append(elev)
+        if elev['clasa']==clasa_max and elev not in elevi_clasa_maxima:
+            elevi_clasa_maxima.append(elev)
 
     text = ""
     for elev in elevi_clasa_minima:
