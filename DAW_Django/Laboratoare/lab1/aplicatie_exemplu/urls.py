@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -15,4 +15,10 @@ urlpatterns = [
     path("tabel", views.tabel, name="tabel"),
     path("lista", views.lista, name="lista"),
     path("elev", views.elev, name="elev"),
+    re_path(r'^pag_cod/(?P<id>\d{3})/$', views.afis_cod),
+    re_path(r'^pag/[\w]*$', views.aduna_numere, name='aduna_numere'),
+    path('liste', views.afiseaza_liste, name='afiseaza_liste'),
+    re_path(r'^nume_corect/(.+)/$', views.numara_nume, name='numara_nume'),
+    path('subsir/<str:parametru>/', views.cauta_subsir, name='cauta_subsir'),
+    path('operatii/', views.operatii_view, name='operatii'),
 ]

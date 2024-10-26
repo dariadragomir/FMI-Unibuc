@@ -2,6 +2,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from datetime import date
+import re
 
 nr_acc = 0
 def index(request):
@@ -128,7 +129,7 @@ def elev(request):
             elevi_clasa_minima = [elev]
         if elev['clasa'] > clasa_max:
             clasa_max=elev['clasa']
-            elevi_clasa_maxima=[elev]
+            elevi_clasa_maxima = [elev]
             
     for elev in elevi:
         if elev['clasa']==clasa_min and elev not in elevi_clasa_minima:
@@ -145,6 +146,7 @@ def elev(request):
         text += f"{elev['nume']} {elev['prenume']}, clasa {elev['clasa']}\n"
     return HttpResponse(text)
 
+
 l=[]
 def pag2(request):
     global l
@@ -152,3 +154,89 @@ def pag2(request):
     print(request.GET)
     l.append(a)
     return HttpResponse(f"<b>Am primit</b>: {l}")
+
+def afis_cod(request,id):
+    return HttpResponse(f"<b>Am primit codul:</b> {id}")
+
+#Laborator2 - regex
+#1
+numar_cereri = 0
+suma_numerelor = 0
+def aduna_numere(request):
+    global numar_cereri, suma_numerelor
+
+    if re.search(r'/pag/\w*\d+$', request.path):
+        numar = int(re.findall(r'\d+$', request.path)[0])
+        suma_numerelor += numar
+        numar_cereri += 1
+        response_text = f"numar cereri: {numar_cereri} suma numere: {suma_numerelor}"
+        return HttpResponse(response_text)
+    else:
+        numar_cereri += 1
+        return HttpResponse("")
+    
+#2
+def afiseaza_liste(request):
+    param_a = request.GET.getlist('a')
+    param_b = request.GET.getlist('b')
+    response_html = '<html><body>'
+
+    if param_a:
+        response_html += '<h3>a:</h3>'
+        response_html += '<ul>'
+        for value in param_a:
+            response_html += f'<li>{value}</li>'
+        response_html += '</ul>'
+
+    if param_b:
+        response_html += '<h3>b:</h3>'
+        response_html += '<ul>'
+        for value in param_b:
+            response_html += f'<li>{value}</li>'
+        response_html += '</ul>'
+
+    response_html += '</body></html>'
+    return HttpResponse(response_html)
+
+#3
+numar_nume = 0
+def numara_nume(request, path):
+    global numar_nume
+    pattern = r'^[A-Z][a-z]*(?:-[A-Z][a-z]*)?\s*\+\s*[A-Z][a-z]*$'
+    if re.match(pattern, path):
+        numar_nume += 1
+        response_text = f"Numarul de nume primite: {numar_nume}"
+    else:
+        response_text = "Nume invalid"
+    return HttpResponse(response_text)
+
+#4
+#accesare http://127.0.0.1:8000/aplicatie_exemplu/subsir/123ab456/
+def cauta_subsir(request, parametru):
+    pattern = r'^\d*[ab]+\d*$'
+    match = re.fullmatch(pattern, parametru)
+    if match:
+        subsir = re.search(r'[ab]+', parametru).group()
+        lungime = len(subsir)
+        return HttpResponse(f"Lungimea subsirului este: {lungime}")
+    else:
+        return HttpResponse("Format incorect de URL.")
+#5
+def operatii_view(request):
+    d = {
+        "lista": [
+            {"a": 10, "b": 20, "operatie": "suma"},
+            {"a": 40, "b": 20, "operatie": "diferenta"},
+            {"a": 25, "b": 30, "operatie": "suma"},
+            {"a": 40, "b": 30, "operatie": "diferenta"},
+            {"a": 100, "b": 50, "operatie": "diferenta"}
+        ]
+    }
+
+    for item in d["lista"]:
+        if item["operatie"] == "suma":
+            item["rezultat"] = item["a"] + item["b"]
+        elif item["operatie"] == "diferenta":
+            item["rezultat"] = item["a"] - item["b"]
+
+    return render(request, 'operatii.html', {'d': d})

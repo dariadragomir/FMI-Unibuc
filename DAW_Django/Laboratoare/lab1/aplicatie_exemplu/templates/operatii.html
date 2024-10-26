@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operatii</title>
+</head>
+<body>
+    <h1>Rezultatele operatiilor</h1>
+    <ul>
+        {% for item in d.lista %}
+            <li>{{ item.a }} {% if item.operatie == "suma" %}+{% else %}-{% endif %} {{ item.b }} = {{ item.rezultat }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
