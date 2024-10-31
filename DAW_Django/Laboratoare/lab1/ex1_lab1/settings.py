@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'aplicatie_exemplu',
+    'aplicatie_exemplu.apps.AplicatieExempluConfig'
+
 ]
 
 MIDDLEWARE = [
@@ -76,9 +77,17 @@ WSGI_APPLICATION = 'ex1_lab1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'OPTIONS': {
+                'options': '-c search_path=django'
+        },
+        'NAME': 'database_django',
+        'USER': 'dariadragomir',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',  # sau IP-ul serverului
+        'PORT': '5432',       # portul implicit pentru PostgreSQL
     }
+
 }
 
 

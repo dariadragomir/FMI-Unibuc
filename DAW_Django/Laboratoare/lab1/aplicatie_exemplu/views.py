@@ -240,3 +240,9 @@ def operatii_view(request):
             item["rezultat"] = item["a"] - item["b"]
 
     return render(request, 'operatii.html', {'d': d})
+
+from .models import Prajitura
+
+def prajituri_list(request):
+    prajituri = Prajitura.objects.all()
+    return render(request, 'prajituri.html', {'prajituri': prajituri})

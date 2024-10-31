@@ -1,0 +1,27 @@
+<!-- templates/prajituri.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Prajituri</title>
+</head>
+<body>
+    <h1>Lista Prajituri</h1>
+    <ul>
+        {% for prajitura in prajituri %}
+            <li>
+                <h2>{{ prajitura.nume }}</h2>
+                <p>{{ prajitura.descriere }}</p>
+                <p>Preț: {{ prajitura.pret }} RON</p>
+                <p>Gramaj: {{ prajitura.gramaj }} g</p>
+                <p>Calorii: {{ prajitura.calorii }}</p>
+                <p>Categorie: {{ prajitura.categorie }}</p>
+                <p>Tip produs: {{ prajitura.tip_produs }}</p>
+                <p>Potrivit pentru diabetici: {{ prajitura.pt_diabetici|yesno:"Da,Nu" }}</p>
+                <p><img src="{{ prajitura.imagine }}" alt="Imaginea prajiturii" width="150"></p>
+                <p>Data adăugării: {{ prajitura.data_adaugare }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
