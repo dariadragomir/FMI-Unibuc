@@ -21,5 +21,7 @@ urlpatterns = [
     re_path(r'^nume_corect/(.+)/$', views.numara_nume, name='numara_nume'),
     path('subsir/<str:parametru>/', views.cauta_subsir, name='cauta_subsir'),
     path('operatii/', views.operatii_view, name='operatii'),
-    path('prajituri/', views.prajituri_list, name='prajituri_list'),
+    path("login", views.custom_login_view, name="login"),
+    path("home", views.home, name="home"),
+    path("inregistrare", views.register_view),
 ]
