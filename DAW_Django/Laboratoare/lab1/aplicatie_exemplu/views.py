@@ -241,8 +241,36 @@ def operatii_view(request):
 
     return render(request, 'operatii.html', {'d': d})
 
-from .models import Prajitura
+from django.contrib.auth.forms import CustomUserCreationForm
+from django.shortcuts import render, redirect
 
-def prajituri_list(request):
-    prajituri = Prajitura.objects.all()
-    return render(request, 'prajituri.html', {'prajituri': prajituri})
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'inregistrare.html', {'form': form})
+
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from .forms import CustomAuthenticationForm
+
+def custom_login_view(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(data=request.POST, request=request)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if not form.cleaned_data.get('ramane_logat'):
+                request.session.set_expiry(0)
+            else:
+                request.session.set_expiry(2*7*24*60*60)  # 2 săptămâni în secunde            
+            return redirect('home')
+    else:
+        form = CustomAuthenticationForm()
+
+    return render(request, 'login.html', {'form': form})
+
