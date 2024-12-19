@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Înregistrare</title>
+</head>
+<body>
+    <h2>Înregistrare</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Înregistrează-te</button>
+    </form>
+</body>
+</html>

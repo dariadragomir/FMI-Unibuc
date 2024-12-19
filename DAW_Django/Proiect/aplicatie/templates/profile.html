@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profil</title>
+</head>
+<body>
+    <h2>Profilul meu</h2>
+    <p>Nume utilizator: {{ user_data.username }}</p>
+    <p>Email: {{ user_data.email }}</p>
+    <p>Număr de telefon: {{ user_data.phone_number }}</p>
+    <p>Adresă: {{ user_data.address }}</p>
+    <p>Oraș: {{ user_data.city }}</p>
+    <p>Data nașterii: {{ user_data.birth_date }}</p>
+    <p>Bio: {{ user_data.bio }}</p>
+    <a href="{% url 'change_password' %}">Schimbă parola</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
