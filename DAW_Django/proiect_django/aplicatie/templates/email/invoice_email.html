@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{%load cart_extras%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura pentru comanda {{ order.id }}</title>
+</head>
+<body>
+    <h1>Factura pentru comanda {{ order.id }}</h1>
+    <p>Data comenzii: {{ order.created_at }}</p>
+    <p>Client: {{ order.user.get_full_name }} ({{ order.user.email }})</p>
+    <p>Contact: {{ settings.DEFAULT_FROM_EMAIL }}</p>
+
+    <h2>Detalii produse</h2>
+    <ul>
+        {% for item in order.items.all %}
+        <li>
+            <strong>{{ item.instrument.nume }}</strong><br>
+            Cantitate: {{ item.quantity }}<br>
+            Preț unitar: {{ item.instrument.pret }} RON<br>
+            Preț total: {{ item.quantity|multiply:item.instrument.pret }} RON<br>
+            <a href="{% url 'instrument_detail' item.instrument.id %}">Vezi detalii produs</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Total produse: {{ order.items.count }}</h2>
+    <h2>Preț total: {{ order.total_price }} RON</h2>
+
+    <p>Mulțumim pentru comanda ta!</p>
+</body>
+</html>

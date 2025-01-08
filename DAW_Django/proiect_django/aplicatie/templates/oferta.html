@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Oferta{% endblock %}
+
+{% block content %}
+<h2>Oferta noastră</h2>
+<p>Descoperiți cele mai bune oferte la instrumentele noastre muzicale.</p>
+<ul>
+    {% for oferta in oferte %}
+        <li>
+            <h3>{{ oferta.nume }}</h3>
+            <p>Data creare: {{ oferta.data_creare }}</p>
+            <p>Data expirare: {{ oferta.data_expirare }}</p>
+            <p>Subiect: {{ oferta.subiect }}</p>
+            <p>Mesaj: {{ oferta.mesaj }}</p>
+            <p>Categorii: {% for categorie in oferta.categorii.all %}{{ categorie.nume }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <p>Discount: {{ oferta.discount }}%</p>
+            <p>Cod promoție: {{ oferta.cod_promotie }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

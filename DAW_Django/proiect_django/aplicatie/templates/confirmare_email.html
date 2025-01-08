@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmare e-mail</title>
+</head>
+<body>
+    <h1>Bun venit, {{ user.first_name }} {{ user.last_name }}!</h1>
+    <p>Username-ul tău este {{ user.username }}.</p>
+    <p>Pentru a confirma e-mailul, accesează următorul link:</p>
+    <a href="{{ site_url }}/aplicatie/confirma_mail/{{ cod }}/">{{ site_url }}/confirma_mail/{{ cod }}/</a>
+    <br>
+    <img src="/Users/dariadragomir/Facultate/AN2/SEM1/Django/proiect_django/static/logo.png" alt="Logo">
+</body>
+</html>

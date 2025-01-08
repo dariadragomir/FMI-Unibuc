@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Filtrare Instrumente{% endblock %}
+
+{% block content %}
+<h1>Filtrare Instrumente</h1>
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">Filtrează</button>
+</form>
+<h2>Rezultate</h2>
+<ul>
+    {% for instrument in instruments %}
+        <li>{{ instrument.nume }} - {{ instrument.pret }} - {{ instrument.brand }} - {{ instrument.categorie }} - {{ instrument.stoc }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

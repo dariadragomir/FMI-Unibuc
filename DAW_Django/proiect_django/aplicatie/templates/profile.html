@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<h2>Profilul meu</h2>
+<p>Nume utilizator: {{ user_data.username }}</p>
+<p>Email: {{ user_data.email }}</p>
+<p>Număr de telefon: {{ user_data.phone_number }}</p>
+<p>Adresă: {{ user_data.address }}</p>
+<p>Oraș: {{ user_data.city }}</p>
+<p>Data nașterii: {{ user_data.birth_date }}</p>
+<p>Bio: {{ user_data.bio }}</p>
+<a href="{% url 'change_password' %}" class="btn">Schimbă parola</a>
+<a href="{% url 'logout' %}" class="btn">Logout</a>
+
+<div id="banner">
+    <a href="{% url 'aloca_permisiune_oferta' %}" class="btn">Oferta reducere 50% doar pentru utilizatorii logați</a>
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    #banner {
+        display: none;
+        background-color: #F9A826; /* Roz pal */
+        color: #182335; /* Bleumarin închis */
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        animation: fadeIn 2s;
+        margin: 20px auto;
+        max-width: 80%;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (Math.random() < 0.3) {
+            document.getElementById('banner').style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

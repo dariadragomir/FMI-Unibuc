@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load cart_extras %}
+{% block title %}Coșul de cumpărături{% endblock %}
+
+{% block content %}
+<h1>Coșul de cumpărături</h1>
+
+<form method="get" action="{% url 'cart_detail' %}">
+    <label for="sort_by">Sortează după:</label>
+    <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+        <option value="nume" {% if sort_by == 'nume' %}selected{% endif %}>Nume</option>
+        <option value="pret" {% if sort_by == 'pret' %}selected{% endif %}>Preț</option>
+    </select>
+</form>
+
+<table>
+    <tr>
+        <th>Produs</th>
+        <th>Preț unitar</th>
+        <th>Cantitate</th>
+        <th>Preț total</th>
+        <th>Acțiuni</th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.instrument.nume }}</td>
+        <td>{{ item.instrument.pret }}</td>
+        <td>
+            <form method="post" action="{% url 'update_cart_item' item.id %}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.instrument.stoc }}">
+                <button type="submit">Actualizează</button>
+            </form>
+        </td>
+        <td>{{ item.instrument.pret|multiply:item.quantity }}</td>
+        <td>
+            <form method="post" action="{% url 'increment_cart_item' item.id %}">
+                {% csrf_token %}
+                <button type="submit">+</button>
+            </form>
+            <form method="post" action="{% url 'decrement_cart_item' item.id %}">
+                {% csrf_token %}
+                <button type="submit">-</button>
+            </form>
+            <form method="post" action="{% url 'remove_from_cart' item.id %}">
+                {% csrf_token %}
+                <button type="submit">Șterge</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<form method="post" action="{% url 'procesare_comanda' %}">
+    {% csrf_token %}
+    <button type="submit">Cumpără</button>
+</form>
+
+<h2>Total: {{ cart.cartitem_set.all|total_price }}</h2>
+<h2>Total produse: {{ cart.cartitem_set.all|total_quantity }}</h2>
+{% endblock %}

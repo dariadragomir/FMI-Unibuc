@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vibrant Beats{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Vibrant Beats</h1>
+        <img src="{% static '/logo.png' %}" alt="Site Logo" style="height: 50px;">
+    </header>
+    <nav>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'cart_detail' %}">Cart</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% if user.is_staff %}
+                <a href="{% url 'adauga_promotie' %}">Adaugă Promoție</a>
+                <a href="{% url 'adauga_instrument' %}">Adaugă Instrument</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+        {% if perms.aplicatie.view_customuser %}
+            <a href="{% url 'admin:index' %}">Admin</a>
+        {% endif %}
+        <a href="{% url 'filter_instruments' %}">Filtrare Instrumente</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="{% url 'instrument_list' %}">Instrumente</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

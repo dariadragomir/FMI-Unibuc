@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Adaugă Promoție{% endblock %}
+
+{% block content %}
+<h2>Adaugă Promoție</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Adaugă Promoție</button>
+</form>
+{% endblock %}

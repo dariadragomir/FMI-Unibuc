@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ instrument.nume }}{% endblock %}
+
+{% block content %}
+<h1>{{ instrument.nume }}</h1>
+<p>{{ instrument.descriere }}</p>
+<p>Preț: {{ instrument.pret }} RON</p>
+<p>Brand: {{ instrument.brand }}</p>
+<p>Categorie: {{ instrument.categorie }}</p>
+<a href="{% url 'add_to_cart' instrument.id %}" class="btn">Adaugă în coș</a>
+{% endblock %}
